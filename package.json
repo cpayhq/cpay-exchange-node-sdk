@@ -1,0 +1,33 @@
+{
+  "author": {
+    "name": "Cpay"
+  },
+  "bugs": {
+    "url": "https://github.com/cpayhq/cpay-exchange-node-sdk/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "got": "^11.8.1",
+    "dayjs": "^1.10.3",
+    "json-bigint": "^1.0.0"
+  },
+  "deprecated": false,
+  "description": "Cpay Exchange REST API",
+  "devDependencies": {
+    "typescript": "^4.1.3"
+  },
+  "homepage": "https://github.com/cpayhq/cpay-exchange-node-sdk#readme",
+  "license": "ISC",
+  "main": "lib/index.js",
+  "name": "@cpayhq/exchange-node-sdk",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cpayhq/cpay-exchange-node-sdk"
+  },
+  "scripts": {
+    "build": "tsc --build tsconfig.json",
+    "publish:patch": "npm version patch && npm publish",
+    "deploy": "npm run build && npm publish"
+  },
+  "version": "1.0.0"
+}
