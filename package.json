@@ -7,9 +7,8 @@
   },
   "bundleDependencies": false,
   "dependencies": {
-    "got": "^11.8.1",
     "dayjs": "^1.10.3",
-    "json-bigint": "^1.0.0"
+    "got": "^11.8.1"
   },
   "deprecated": false,
   "description": "Cpay Exchange REST API",
@@ -29,5 +28,5 @@
     "publish:patch": "npm version patch && npm publish",
     "deploy": "npm run build && npm publish"
   },
-  "version": "1.0.0"
+  "version": "1.0.1"
 }

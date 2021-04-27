@@ -31,10 +31,7 @@ export class CpayExchangeSDK extends CpayExchangeSDKBase {
 
   getExchangesList(options: ExchangeListOptions) {
     const path = `/api/exchanges/list`;
-    return this.auth_get<IPaginated<ExchangeInfo>>(`${path}`, {
-      method: "GET",
-      searchParams: { ...options },
-    });
+    return this.auth_get<IPaginated<ExchangeInfo>>(`${path}`, options);
   }
 
   getExchangePairs(options: ExchangePairsOptions) {
@@ -42,10 +39,7 @@ export class CpayExchangeSDK extends CpayExchangeSDKBase {
     if (!options.exchangeId) {
       options.exchangeId = 1;
     }
-    return this.auth_get<IPaginated<ExchangePairInfo>>(`${path}`, {
-      method: "GET",
-      searchParams: { ...options },
-    });
+    return this.auth_get<IPaginated<ExchangePairInfo>>(`${path}`, options);
   }
 
   convertPairs(options: ExchangeConvertPairsOptions) {
@@ -53,10 +47,7 @@ export class CpayExchangeSDK extends CpayExchangeSDKBase {
     if (!options.exchangeId) {
       options.exchangeId = 1;
     }
-    return this.auth_get<ExchangeConvertPairsInfo>(`${path}`, {
-      method: "GET",
-      searchParams: { ...options },
-    });
+    return this.auth_get<ExchangeConvertPairsInfo>(`${path}`, options);
   }
 
   getExhangePairHistory(options: ExchangePairHistoryOptions) {
@@ -64,10 +55,7 @@ export class CpayExchangeSDK extends CpayExchangeSDKBase {
     if (!options.exchangeId) {
       options.exchangeId = 1;
     }
-    return this.auth_get<ExchangePairHistoryInfo[]>(`${path}`, {
-      method: "GET",
-      searchParams: { ...options },
-    });
+    return this.auth_get<ExchangePairHistoryInfo[]>(`${path}`, options);
   }
 }
 

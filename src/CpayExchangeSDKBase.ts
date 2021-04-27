@@ -1,4 +1,3 @@
-import JSONbig from "json-bigint";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 
@@ -60,9 +59,9 @@ export class CpayExchangeSDKBase {
       ...this.options.httpOptions,
       ...options,
     })
-      .then((data) => {
+      .then((data: any) => {
         try {
-          const json = JSONbig.parse(data);
+          const json = JSON.parse(data);
           if (json.status === "success") {
             return json.data || json;
           } else {
@@ -87,7 +86,7 @@ export class CpayExchangeSDKBase {
         this.errLogger(options.method as string, "-", path, err);
       });
   };
-  request = <T>(path: string, options: HttpOptions): Promise<T> => {
+  private request = <T>(path: string, options: HttpOptions): Promise<T> => {
     if (!this.options.url.rest) {
       return Promise.reject("Rest url is required.");
     }
@@ -98,7 +97,7 @@ export class CpayExchangeSDKBase {
     params: Record<string, any> = {} as Record<string, any>
   ) => {
     if (!this.options.url.rest) {
-      return Promise.reject("未设置options.url.rest");
+      return Promise.reject("Rest url is required.");
     }
     const PATH = `${this.options.url.rest}${path}`;
     const { apiKey } = this.options;
