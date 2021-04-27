@@ -1,6 +1,10 @@
 # cpay-exchange-node-sdk
 
 ```
+npm i cpay-exchange-node-api-sdk
+```
+
+```
 import CpayExchangeSDK from '@cpayhq/exchange-node-sdk';
 
 

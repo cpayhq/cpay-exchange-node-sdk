@@ -1,6 +1,6 @@
 {
   "author": {
-    "name": "Cpay"
+    "name": "cpay"
   },
   "bugs": {
     "url": "https://github.com/cpayhq/cpay-exchange-node-sdk/issues"
@@ -18,7 +18,7 @@
   "homepage": "https://github.com/cpayhq/cpay-exchange-node-sdk#readme",
   "license": "ISC",
   "main": "lib/index.js",
-  "name": "@cpayhq/exchange-node-sdk",
+  "name": "cpay-exchange-node-api-sdk",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cpayhq/cpay-exchange-node-sdk"
@@ -28,5 +28,5 @@
     "publish:patch": "npm version patch && npm publish",
     "deploy": "npm run build && npm publish"
   },
-  "version": "1.0.2"
+  "version": "1.0.0"
 }
