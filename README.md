@@ -5,7 +5,7 @@ npm i cpay-exchange-node-api-sdk
 ```
 
 ```
-import CpayExchangeSDK from '@cpayhq/exchange-node-sdk';
+import CpayExchangeSDK from 'cpay-exchange-node-api-sdk';
 
 
 const ex = new CpayExchangeSDK({ apiKey: 'apiKey' })
