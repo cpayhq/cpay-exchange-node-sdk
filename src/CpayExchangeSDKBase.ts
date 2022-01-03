@@ -98,7 +98,7 @@ export class CpayExchangeSDKBase {
       })
       .catch((err) => {
         this.errLogger(options.method as string, "-", path, err);
-        throw error;
+        throw err;
       });
   };
   private request = <T>(path: string, options: HttpOptions): Promise<T> => {
