@@ -1,1 +1,1 @@
-export const REST_URL = "https://api.demo.ex.cpay.world/ex";
+export const REST_URL = "https://api.rates.cpay.world/ex";
