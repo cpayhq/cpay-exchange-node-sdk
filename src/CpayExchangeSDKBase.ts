@@ -93,10 +93,12 @@ export class CpayExchangeSDKBase {
             "Parse Error",
             error
           );
+          throw error;
         }
       })
       .catch((err) => {
         this.errLogger(options.method as string, "-", path, err);
+        throw error;
       });
   };
   private request = <T>(path: string, options: HttpOptions): Promise<T> => {
