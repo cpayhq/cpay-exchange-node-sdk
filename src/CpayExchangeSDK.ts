@@ -42,36 +42,39 @@ export class CpayExchangeSDK extends CpayExchangeSDKBase {
     return this.auth_get<IPaginated<ExchangePairInfo>>(`${path}`, options);
   }
 
-  convertPairs(options: ExchangeConvertPairsOptions) {
+  convertPairs(
+    options: ExchangeConvertPairsOptions
+  ): Promise<ExchangeConvertPairsInfo> {
     const path = `/api/exchanges/convert`;
     if (!options.exchangeId) {
       options.exchangeId = 1;
     }
     const redisClient = this.redisClient();
     const keyPrefix = `rates.pairs.${options.exchangeId}.${options.from}.${options.to}`;
-    let convertData;
-    try {
-      convertData = this.auth_get<ExchangeConvertPairsInfo>(`${path}`, options);
-      if (redisClient) {
-        redisClient.set(keyPrefix, JSON.stringify(convertData));
-      }
-
-      return convertData;
-    } catch (err) {
-      if (redisClient) {
-        return redisClient.exists(keyPrefix).then((exist) => {
-          if (exist == true) {
-            return redisClient
-              .get(keyPrefix)
-              .then((result) => JSON.parse(result));
+    return new Promise((resolve, reject) => {
+      this.auth_get<ExchangeConvertPairsInfo>(`${path}`, options)
+        .then((convertData) => {
+          if (redisClient) {
+            redisClient.set(keyPrefix, JSON.stringify(convertData));
+          }
+          return resolve(convertData);
+        })
+        .catch((err) => {
+          if (redisClient) {
+            redisClient.exists(keyPrefix).then((exist) => {
+              if (exist == 1) {
+                redisClient
+                  .get(keyPrefix)
+                  .then((result) => resolve(JSON.parse(result)));
+              } else {
+                return reject(err);
+              }
+            });
           } else {
-            throw err;
+            return reject(err);
           }
         });
-      } else {
-        throw err;
-      }
-    }
+    });
   }
 
   getExhangePairHistory(options: ExchangePairHistoryOptions) {

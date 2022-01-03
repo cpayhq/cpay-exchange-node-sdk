@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import { createClient } from "redis";
+import * as Redis from "ioredis";
 
 import { REST_URL } from "./constant";
 import { request, Options as HttpOptions } from "./utils/httpClient";
@@ -60,13 +60,7 @@ export class CpayExchangeSDKBase {
   }
   redisClient() {
     if (this.options.redisUri) {
-      const client = createClient({ url: this.options.redisUri });
-
-      client.on("error", (err) => {
-        throw err;
-      });
-
-      client.connect();
+      const client = new Redis.default(this.options.redisUri);
 
       return client;
     }

@@ -7,9 +7,10 @@
   },
   "bundleDependencies": false,
   "dependencies": {
+    "@types/ioredis": "^4.17.4",
     "dayjs": "^1.10.3",
     "got": "^11.8.1",
-    "redis": "^4.0.1"
+    "ioredis": "^4.17.3"
   },
   "deprecated": false,
   "description": "Cpay Exchange REST API",
@@ -29,5 +30,5 @@
     "publish:patch": "npm version patch && npm publish",
     "deploy": "npm run build && npm publish"
   },
-  "version": "1.0.2"
+  "version": "1.0.3"
 }
