@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
+import { createClient } from "redis";
 
 import { REST_URL } from "./constant";
 import { request, Options as HttpOptions } from "./utils/httpClient";
@@ -8,6 +9,8 @@ dayjs.extend(utc);
 
 export interface CpayExchangeSDKBaseOptions {
   apiKey: string;
+
+  redisUri?: string;
 
   errLogger?: (mssage: string, ...arg: any[]) => void;
 
@@ -29,7 +32,8 @@ const DEFAUTL_HTTP_OPTIONS = {
 };
 
 export class CpayExchangeSDKBase {
-  options: Required<CpayExchangeSDKBaseOptions> = {} as Required<CpayExchangeSDKBaseOptions>;
+  options: Required<CpayExchangeSDKBaseOptions> =
+    {} as Required<CpayExchangeSDKBaseOptions>;
 
   constructor(options?: Partial<CpayExchangeSDKBaseOptions>) {
     if (!options) {
@@ -53,6 +57,21 @@ export class CpayExchangeSDKBase {
     if (otherOptions) {
       Object.assign(this.options, otherOptions);
     }
+  }
+  redisClient() {
+    if (this.options.redisUri) {
+      const client = createClient({ url: this.options.redisUri });
+
+      client.on("error", (err) => {
+        throw err;
+      });
+
+      client.connect();
+
+      return client;
+    }
+
+    return null;
   }
   _request = <T>(path: string, options: HttpOptions): Promise<T> => {
     return request<T>(path, {

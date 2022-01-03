@@ -47,7 +47,31 @@ export class CpayExchangeSDK extends CpayExchangeSDKBase {
     if (!options.exchangeId) {
       options.exchangeId = 1;
     }
-    return this.auth_get<ExchangeConvertPairsInfo>(`${path}`, options);
+    const redisClient = this.redisClient();
+    const keyPrefix = `rates.pairs.${options.exchangeId}.${options.from}.${options.to}`;
+    let convertData;
+    try {
+      convertData = this.auth_get<ExchangeConvertPairsInfo>(`${path}`, options);
+      if (redisClient) {
+        redisClient.set(keyPrefix, JSON.stringify(convertData));
+      }
+
+      return convertData;
+    } catch (err) {
+      if (redisClient) {
+        return redisClient.exists(keyPrefix).then((exist) => {
+          if (exist == true) {
+            return redisClient
+              .get(keyPrefix)
+              .then((result) => JSON.parse(result));
+          } else {
+            throw err;
+          }
+        });
+      } else {
+        throw err;
+      }
+    }
   }
 
   getExhangePairHistory(options: ExchangePairHistoryOptions) {

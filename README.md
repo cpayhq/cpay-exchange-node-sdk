@@ -8,7 +8,7 @@ npm i cpay-exchange-node-api-sdk
 import CpayExchangeSDK from 'cpay-exchange-node-api-sdk';
 
 
-const ex = new CpayExchangeSDK({ apiKey: 'apiKey' })
+const ex = new CpayExchangeSDK({ apiKey: 'apiKey', redisUri?: 'string' })
 ```
 
 Available Methods:
@@ -59,7 +59,7 @@ let options = {
   to: string;
   interval: string;
 }
-interval - Available values : hourly, daily, weekly, monthly, 5m, 10m, 15m, 30m, 45m, 1h, 5h, 12h, 24h, 1d, 2d, 3d, 7d, 14d, 15d, 30d;
+interval - Available values : hourly, daily, weekly, monthly;
 from, to - Example : 2021-03-01 14:12:10
 
 const history = await ex.getExhangePairHistory(options);
