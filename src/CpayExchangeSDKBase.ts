@@ -41,6 +41,9 @@ export class CpayExchangeSDKBase {
     }
     this.setOptions(options);
   }
+
+  private redis_Client: Redis.Redis;
+
   setOptions(options: Partial<CpayExchangeSDKBaseOptions> = {}) {
     const { httpOptions, url, ...otherOptions } = options;
 
@@ -60,9 +63,11 @@ export class CpayExchangeSDKBase {
   }
   redisClient() {
     if (this.options.redisUri) {
-      const client = new Redis.default(this.options.redisUri);
+      if (!this.redis_Client) {
+        this.redis_Client = new Redis.default(this.options.redisUri);
+      }
 
-      return client;
+      return this.redis_Client;
     }
 
     return null;
