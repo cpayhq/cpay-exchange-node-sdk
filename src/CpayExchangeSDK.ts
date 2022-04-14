@@ -46,11 +46,9 @@ export class CpayExchangeSDK extends CpayExchangeSDKBase {
     options: ExchangeConvertPairsOptions
   ): Promise<ExchangeConvertPairsInfo> {
     const path = `/api/exchanges/convert`;
-    if (!options.exchangeId) {
-      options.exchangeId = 1;
-    }
     const redisClient = this.redisClient();
-    const keyPrefix = `rates.pairs.${options.exchangeId}.${options.from}.${options.to}`;
+    let keyPrefix = `rates.pairs.${options.from}.${options.to}`;
+    if (options.exchangeId) keyPrefix += `.${options.exchangeId}`;
     return new Promise((resolve, reject) => {
       this.auth_get<ExchangeConvertPairsInfo>(`${path}`, options)
         .then((convertData) => {
